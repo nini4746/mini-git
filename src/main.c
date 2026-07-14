@@ -285,6 +285,13 @@ static void checkout_tree(const char *tree_hex, const char *prefix) {
         memcpy(name, content + ns, nl);
         name[nl] = '\0';
         i++;
+        /* A tree entry name must be a single path component. Reject anything
+           that could escape the working tree (path traversal) or clobber the
+           repo: names containing '/', empty names, '.', '..', or '.git'. */
+        if (name[0] == '\0' || strchr(name, '/') != NULL ||
+            strcmp(name, ".") == 0 || strcmp(name, "..") == 0 ||
+            strcmp(name, ".git") == 0)
+            die("fatal: unsafe tree entry name '%s'", name);
         if (i + 20 > size)
             break;
         char entry_hex[41];

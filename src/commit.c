@@ -38,8 +38,17 @@ int commit_create(const char *tree_hex, const char *parent_hex,
     size_t mlen = strlen(message);
     int add_nl = (mlen == 0 || message[mlen - 1] != '\n');
 
-    size_t cap = 512 + mlen;
+    /* Size the buffer from the actual field lengths so untrusted env vars
+       (GIT_AUTHOR_NAME, ...) cannot make snprintf truncate and push `len`
+       past `cap`, which would corrupt the heap in the memcpy below. */
+    size_t cap = 128 + mlen
+               + strlen(tree_hex)
+               + (parent_hex ? strlen(parent_hex) : 0)
+               + strlen(an) + strlen(ae) + strlen(ad)
+               + strlen(cn) + strlen(ce) + strlen(cd);
     char *buf = malloc(cap);
+    if (!buf)
+        return -1;
     size_t len = 0;
     len += snprintf(buf + len, cap - len, "tree %s\n", tree_hex);
     if (parent_hex && *parent_hex)
