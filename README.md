@@ -162,7 +162,7 @@ mini-git/
 ├── Makefile
 ├── src/          # C 소스 (object, index, tree, commit, refs, diff, sha1, main)
 ├── tests/        # run.sh + 스위트 01~05, lib.sh
-├── docs/         # SRS.md, SDS.md
+├── docs/         # SRS.md, SDS.md, adr/
 └── .planning/    # SPEC.md, plans/
 ```
 
@@ -170,5 +170,7 @@ mini-git/
 
 - [요구사항 명세 (docs/SRS.md)](docs/SRS.md) - 기능 / 비기능 요구사항, 범위, 추적표
 - [설계 명세 (docs/SDS.md)](docs/SDS.md) - 구성도, 시퀀스, 자료구조와 온디스크 포맷, 모듈
+- [설계 결정 기록 (docs/adr/)](docs/adr/README.md) - 주요 설계 결정의 맥락, 대안, 결과
+- [변경 이력 (CHANGELOG.md)](CHANGELOG.md) - 날짜별 변경 사항
 - [명세 (SPEC.md)](.planning/SPEC.md) - 요구사항, 수용 기준, 범위
 - [구현 계획 (plans/)](.planning/plans/) - 단계별 plan 5개
